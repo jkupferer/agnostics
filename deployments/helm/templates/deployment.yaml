@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -31,6 +32,15 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: GIT_URL
+              value: {{ .Values.git.url }}
+            - name: GIT_SSH_PRIVATE_KEY
+              value: {{ .Values.git.private_key }}
+            - name: REDIS_URL
+              value: {{ .Values.git.redis_url }}
+            - name: DEBUG
+              value: {{ .Values.git.debug }}
           ports:
             - name: http
               containerPort: 8080

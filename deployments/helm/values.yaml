@@ -4,11 +4,20 @@
 
 replicaCount: 1
 
+namespace: yv-test
+
 image:
   repository: quay.io/redhat-gpte/scheduler
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
+
+git:
+  url: git@github.com:redhat-gpe/scheduler-config.git
+  private_key: /.ssh/id_rsa
+  redis_url: redis://scheduler-redis:6379/
+  debug: True
+
 
 imagePullSecrets: []
 nameOverride: ""
@@ -35,6 +44,10 @@ securityContext: {}
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
+
+redis:
+  name: scheduler-redis
+  port: 6379
 
 service:
   type: ClusterIP

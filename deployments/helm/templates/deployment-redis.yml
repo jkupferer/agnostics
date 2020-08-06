@@ -1,3 +1,4 @@
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -8,13 +9,11 @@ metadata:
     app: scheduler
     template: deploy-scheduler-template
   name: scheduler-redis
-  namespace: scheduler-gpe-demo
+  namespace: {{ .Values.namespace }}
   resourceVersion: "70023207"
-  selfLink: /apis/extensions/v1beta1/namespaces/scheduler-gpe-demo/deployments/scheduler-redis
-  uid: f521304a-b243-11ea-b0aa-0a54efb2fbb6
 spec:
   progressDeadlineSeconds: 600
-  replicas: 1
+  replicas: 2
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -68,22 +67,3 @@ spec:
       - name: scheduler-redis-data
         persistentVolumeClaim:
           claimName: scheduler-redis
-status:
-  availableReplicas: 1
-  conditions:
-  - lastTransitionTime: "2020-06-24T08:09:39Z"
-    lastUpdateTime: "2020-06-24T08:09:39Z"
-    message: Deployment has minimum availability.
-    reason: MinimumReplicasAvailable
-    status: "True"
-    type: Available
-  - lastTransitionTime: "2020-06-19T15:45:53Z"
-    lastUpdateTime: "2020-06-24T08:09:39Z"
-    message: ReplicaSet "scheduler-redis-5ddd95d55f" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  observedGeneration: 2
-  readyReplicas: 1
-  replicas: 1
-  updatedReplicas: 1
